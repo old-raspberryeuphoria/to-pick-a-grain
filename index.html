@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="./main.js"></script>
+  <style>
+    p {
+      max-width: 750px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    table {
+      margin: 50px auto;
+    }
+
+    td {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #000000;
+      text-align: center;
+    }
+
+    .button-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    input[type="number"] {
+      width: 65px;
+      height: 15px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="button-group">
+    <input id="gridWidth" type="number" value="3" min="2" max="10" data-value="width" />
+    <label for="gridWidth">Grid width</label>
+  </div>
+
+  <div class="button-group">
+      <input id="gridHeight" type="number" value="3" min="2" max="10" data-value="height" />
+      <label for="gridHeight">Grid height</label>
+  </div>
+
+  <div class="button-group">
+    <input type="submit" value="Generate grid" />
+  </div>
+
+  <div id="root"></div>
+</body>
+</html>
