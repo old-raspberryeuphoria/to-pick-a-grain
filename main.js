@@ -22,7 +22,7 @@ const generateCheckerboard = ({ width, height }) => {
           x,
           y,
         },
-        value: rand({ min: 1, max: 10 }),
+        value: rand({ min: 1, max: 99 }),
         el: cellEl,
       };
 
