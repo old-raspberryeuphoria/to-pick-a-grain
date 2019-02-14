@@ -51,8 +51,8 @@ const generateCheckerboard = ({ width, height }) => {
       if (x === width - 1 && y === 0) {
         // This is the upperRightCell. End of the road!
         paths.push({
-          path,
-          value: pathValue,
+          cells,
+          pathValue: pathValue,
         });
 
         if (pathValue >= bestValue) {
@@ -100,6 +100,14 @@ const generateCheckerboard = ({ width, height }) => {
     resultMessage += `one path to achieve the best score of <strong>${bestValue}</strong>:<br />`;
   }
 
+  if (bestPaths.length === 1) {
+    bestPaths.forEach((path) => {
+      path.forEach((cell) => {
+        cell.el.style.background = '#5ba56e';
+      });
+    });
+  }
+
   bestPaths.forEach((path) => {
     const pathWay = path.map((cell) => cell.value);
     resultMessage += `${pathWay.join(' + ')}<br />`;
@@ -133,9 +141,6 @@ const init = () => {
     const board = generateCheckerboard({ width, height });
     rootEl.appendChild(board.el);
   });
-
-
-
 };
 
 document.addEventListener('DOMContentLoaded', () => {
