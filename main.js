@@ -4,6 +4,7 @@ const generateCheckerboard = ({ width, height }) => {
   const wrapperEl = document.createElement('div');
   const tableEl = document.createElement('table');
   wrapperEl.appendChild(tableEl);
+  wrapperEl.className = 'wrapper';
 
   const cells = {};
   
@@ -93,29 +94,67 @@ const generateCheckerboard = ({ width, height }) => {
 
   const { paths, bestPaths, bestValue } = computePaths();
 
+  const paragraphEl = document.createElement('p');
+  wrapperEl.appendChild(paragraphEl);
+
   let resultMessage = `Out of <strong>${paths.length}</strong> different paths, there is `;
   if (bestPaths.length > 1) {
-    resultMessage += `<strong>${bestPaths.length}</strong> different paths to achieve the best score of <strong>${bestValue}</strong>:<br />`;
+    resultMessage += `<strong>${bestPaths.length}</strong> different paths to achieve the best score of <strong>${bestValue}</strong>:`;
   } else {
-    resultMessage += `one path to achieve the best score of <strong>${bestValue}</strong>:<br />`;
+    resultMessage += `one path to achieve the best score of <strong>${bestValue}</strong>:`;
   }
 
-  if (bestPaths.length === 1) {
-    bestPaths.forEach((path) => {
-      path.forEach((cell) => {
-        cell.el.style.background = '#5ba56e';
-      });
-    });
-  }
+  paragraphEl.innerHTML = resultMessage;
+
+  const pathsListEl = document.createElement('ul');
+  wrapperEl.appendChild(pathsListEl);
 
   bestPaths.forEach((path) => {
     const pathWay = path.map((cell) => cell.value);
-    resultMessage += `${pathWay.join(' + ')}<br />`;
+    const pathEl = document.createElement('li');
+    pathsListEl.appendChild(pathEl);
+    pathEl.innerHTML = pathWay.join(' + ');
+
+    path.enable = () => {
+      pathEl.classList.add('highlighted');
+
+      path.forEach((cell) => {
+        cell.el.classList.add('highlighted');
+      });
+    };
+
+    path.disable = () => {
+      pathEl.removeAttribute('class');
+
+      path.forEach((cell) => {
+        cell.el.removeAttribute('class');
+      });
+    };
   });
 
-  const paragraphEl = document.createElement('p');
-  wrapperEl.appendChild(paragraphEl);
-  paragraphEl.innerHTML = resultMessage;
+  let i = 0;
+  const bestPathsLength = bestPaths.length;
+
+  const highlightAnimation = setInterval(() => {
+    if (bestPaths[i - 1]) {
+      bestPaths[i - 1].disable();
+    } else {
+      bestPaths[bestPathsLength - 1].disable();
+    }
+
+    bestPaths[i].enable();
+
+    if (bestPathsLength.length === 1) {
+      clearInterval(highlightAnimation);
+      return;
+    }
+
+    if (i === bestPaths.length - 1) {
+      i = 0;
+    } else {
+      i++;
+    }
+  }, 1000);
 
   return {
     el: wrapperEl,

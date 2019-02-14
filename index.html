@@ -7,9 +7,24 @@
   <title>Document</title>
   <script type="text/javascript" src="./main.js"></script>
   <style>
-    p {
-      max-width: 750px;
+    .button-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    input[type="number"] {
+      width: 65px;
+      height: 15px;
+      margin-right: 5px;
+    }
+
+    .wrapper {
+      max-width: 700px;
       margin: 0 auto;
+    }
+
+    p {
       text-align: center;
     }
 
@@ -22,18 +37,19 @@
       height: 50px;
       border: 1px solid #000000;
       text-align: center;
+      transition: background .2s ease-in-out;
     }
 
-    .button-group {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
+    td.highlighted {
+      background: #5ba56e;
     }
 
-    input[type="number"] {
-      width: 65px;
-      height: 15px;
-      margin-right: 5px;
+    li {
+      transition: color .2s ease-in-out;
+    }
+
+    li.highlighted {
+      color: #5ba56e;
     }
   </style>
 </head>
