@@ -115,7 +115,7 @@ const generateCheckerboard = ({ width, height }) => {
     pathsListEl.appendChild(pathEl);
     pathEl.innerHTML = pathWay.join(' + ');
 
-    path.enable = () => {
+    path.enableHighlight = () => {
       pathEl.classList.add('highlighted');
 
       path.forEach((cell) => {
@@ -123,38 +123,38 @@ const generateCheckerboard = ({ width, height }) => {
       });
     };
 
-    path.disable = () => {
+    path.disableHighlight = () => {
       pathEl.removeAttribute('class');
 
       path.forEach((cell) => {
         cell.el.removeAttribute('class');
       });
     };
+
+    if (bestPaths.length === 1) {
+      path.enableHighlight();
+    }
   });
 
-  let i = 0;
-  const bestPathsLength = bestPaths.length;
+  if (bestPaths.length > 1) {
+    let i = 0;
 
-  const highlightAnimation = setInterval(() => {
-    if (bestPaths[i - 1]) {
-      bestPaths[i - 1].disable();
-    } else {
-      bestPaths[bestPathsLength - 1].disable();
-    }
-
-    bestPaths[i].enable();
-
-    if (bestPathsLength.length === 1) {
-      clearInterval(highlightAnimation);
-      return;
-    }
-
-    if (i === bestPaths.length - 1) {
-      i = 0;
-    } else {
-      i++;
-    }
-  }, 1000);
+    setInterval(() => {
+      if (bestPaths[i - 1]) {
+        bestPaths[i - 1].disableHighlight();
+      } else {
+        bestPaths[bestPaths.length - 1].disableHighlight();
+      }
+  
+      bestPaths[i].enableHighlight();
+  
+      if (i === bestPaths.length - 1) {
+        i = 0;
+      } else {
+        i++;
+      }
+    }, 1000);
+  }
 
   return {
     el: wrapperEl,
