@@ -44,6 +44,9 @@ const generateCheckerboard = ({ width, height }) => {
     let bestValue = 0;
     let pathValue = 0;
 
+    const moveRight = (path, pathValue, x, y) => traversePath([...path], pathValue, x + 1, y);
+    const moveTop = (path, pathValue, x, y) => traversePath([...path], pathValue, x, y - 1);
+
     const traversePath = (path, pathValue, x, y) => {
       const cell = cells[[x, y]];
       path.push(cell);
@@ -72,14 +75,14 @@ const generateCheckerboard = ({ width, height }) => {
 
       if (x < width - 1 && y > 0) {
         // We can go in both directions
-        traversePath([...path], pathValue, x + 1, y);
-        traversePath([...path], pathValue, x, y - 1);
+        moveRight(path, pathValue, x, y);
+        moveTop(path, pathValue, x, y);
       } else if (x === width - 1) {
         // We can only go top
-        traversePath([...path], pathValue, x, y - 1);
+        moveTop(path, pathValue, x, y);
       } else if (y === 0) {
         // We can only go right
-        traversePath([...path], pathValue, x + 1, y);
+        moveRight(path, pathValue, x, y);
       }
     };
 
